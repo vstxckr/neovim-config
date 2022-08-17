@@ -33,20 +33,6 @@ autocmd FileChangedShellPost *
 		\ | echo "File changed on disk. Buffer reloaded."
 		\ | echohl None
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Key mappings
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
-" Resize pane
-nnoremap <M-a> :vertical resize +1<CR> 		
-nnoremap <M-f> :vertical resize -1<CR>
-nnoremap <M-s> :resize +1<CR>
-nnoremap <M-d> :resize -1<CR>
-
-" Search a hightlighted text
-vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
-
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugin list
 " (used for Vim-plug - https://github.com/junegunn/vim-plug)
@@ -101,8 +87,17 @@ call plug#begin(stdpath('config').'/plugged')
 call plug#end()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" =>                     My Config                                     
+" =>                     Key mappings                                     
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Resize pane
+nnoremap <M-a> :vertical resize +1<CR> 		
+nnoremap <M-f> :vertical resize -1<CR>
+nnoremap <M-s> :resize +1<CR>
+nnoremap <M-d> :resize -1<CR>
+
+" Search a hightlighted text
+vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
 
 "set font
 set guifont=FiraCode\ NF:h9
@@ -223,45 +218,3 @@ autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 for setting_file in split(glob(stdpath('config').'/settings/*.vim'))
 	execute 'source' setting_file
 endfor
-
-" dap config 
-
-nnoremap <leader>dt :lua require'dap'.toggle_breakpoint()<CR>
-nnoremap <F9> :lua require'dap'.continue()<CR>
-nnoremap <F10> :lua require'dap'.step_over()<CR>
-nnoremap <F12> :lua require'dap'.step_into()<CR>
-
-lua <<EOF
-local dap = require('dap')
-dap.adapters.cppdbg = {
-	id = 'cppdbg',
-	type = 'executable',
-	command = '/home/mew/extension/debugAdapters/bin/OpenDebugAD7',
-}
-
-local dap = require('dap')
-dap.configurations.cpp = {
-  {
-    name = "Launch file",
-    type = "cppdbg",
-    request = "launch",
-    program = function()
-      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-    end,
-    cwd = '${workspaceFolder}',
-    stopOnEntry = true,
-  },
-  {
-    name = 'Attach to gdbserver :1234',
-    type = 'cppdbg',
-    request = 'launch',
-    MIMode = 'gdb',
-    miDebuggerServerAddress = 'localhost:1234',
-    miDebuggerPath = '/usr/bin/gdb',
-    cwd = '${workspaceFolder}',
-    program = function()
-      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-    end,
-  },
-}
-EOF
