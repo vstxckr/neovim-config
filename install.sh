@@ -36,6 +36,8 @@ sudo apt install -y npm;
 echo -e "\nINSTALL pynvim & node nvim...\n";
 sudo pip install pynvim;
 sudo npm install -y neovim -g;
+sudo apt install -y ripgrep
+
 
 # Add config to nvim
 echo -e "\nADDING CONFIG TO ~/.config/nvim/ ...\n";
