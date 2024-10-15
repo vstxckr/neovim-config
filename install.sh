@@ -44,11 +44,9 @@ rm init.vim;
 rm coc-settings.json;
 mv config.vim init.vim
 
-if [! -d "~/.config/" ]; then
-	mkdir ~/.config/;
-	mkdir ~/.config/nvim;
-fi
+mkdir ~/.config/;
+mkdir ~/.config/nvim;
 
-mv init.vim ~/.config/nvim/;
+mv init.vim ~/.config/nvim/init.vim;
 echo -e "\nOPEN NVIM AND TYPE :PlugInstall THEN EXIT TO APPLY THE PLUGIN\n";
 
